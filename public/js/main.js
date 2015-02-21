@@ -66,7 +66,7 @@
       rows.push({
         key: key,
         value: dataRow[mode],
-        avg: dataRow.average,
+        avg: siteIndex !== null ? dataRow.average : null,
         siteIndex: siteIndex
       });
     });
