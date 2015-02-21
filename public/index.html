@@ -17,12 +17,14 @@
       <thead>
         <tr>
           <th>Variable</th>
-          <th id="value-col">Value</th>
+          <th id="value-col" style="cursor: pointer;">Value</th>
           <th>Average</th>
           <th>Website</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        <tr><td colspan="4">Loading...</td></tr>
+      </tbody>
     </table>
 
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
@@ -34,8 +36,14 @@
       <% _.each(rows, function(row) { %>
         <tr>
           <td><%- row.key %></td>
-          <td><%- row.value || 'both' %></td>
+          <td><%- row.value %></td>
           <td><%- row.avg || '---' %></td>
+          <td>
+            <%= row.siteIndex === 0 ?
+              '<a href="http://www.mycs.com">www.mycs.com</a>' :
+              row.siteIndex === 1 ?
+              '<a href="http://www.mycs.com">www.mycs.io</a>' : 'both' %>
+          </td>
         </tr>
       <% }); %>
     </script>

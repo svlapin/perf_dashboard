@@ -29,8 +29,6 @@
 
     var $table = $('#metrics-table');
 
-    $table.find('tbody').empty();
-
     var metricsKeys = Object.keys(window.app.data[0]);
 
     var rows = [];
@@ -62,19 +60,23 @@
         }
       }
 
+      var dataRow = siteIndex !== null ?
+        window.app.data[siteIndex][key] : window.app.data[0][key];
+
       rows.push({
         key: key,
-        value: siteIndex !== null ?
-          window.app.data[siteIndex][key][mode] : null,
-        avg: siteIndex !== null ?
-          window.app.data[siteIndex][key].average : null
+        value: dataRow[mode],
+        avg: dataRow.average,
+        siteIndex: siteIndex
       });
     });
 
     var tblTpl = _.template($('#__tpl_table').html());
 
-    $('#metrics-table').data('mode', mode).find('tbody')
+    $table.data('mode', mode).find('tbody').empty()
       .append(tblTpl({rows: rows}));
+
+    $('#value-col').text('Value ' + mode.toUpperCase());
   }
 
 })(window, jQuery);
