@@ -2,6 +2,7 @@
 
 var fs = require('fs');
 var async = require('async');
+var _ = require('lodash');
 
 var dataFiles = [
   './data/mycs_com.json',
@@ -12,13 +13,20 @@ var dataFiles = [
   GET /metrics
  */
 exports.get = function(req, res) {
-  readDataFiles(function(err, results) {
-    if (err) {
-      return res.status(500).send(err.message);
-    }
+  async.waterfall(
+    [
+      readDataFiles,
+      analyzeMetrics
+    ],
 
-    res.send('OK');
-  });
+    function(err, results) {
+      if (err) {
+        return res.status(500).send(err.message);
+      }
+
+      res.json(results);
+    }
+  );
 };
 
 /**
@@ -51,5 +59,60 @@ function readDataFiles(cb) {
     }
 
     cb(null, parsedData);
+  });
+}
+
+/**
+ * Analyzes passed metricsData and calls callback with the array
+ * having the following structure:
+ * [
+ *   // site 1
+ *   {
+ *     metricsKey: {
+ *       avg: 1234,
+ *       max: 12345,
+ *       min: 123
+ *     }
+ *   },
+ *
+ *   // site 2
+ *   ...
+ * ]
+ *
+ * @param  {Object}   results metrics data
+ * @param  {Function} cb      callback
+ */
+function analyzeMetrics(results, cb) {
+  var metrics = results.map(function(r) {
+    return _.pluck(r.runs, 'metrics');
+  });
+
+  var analyzed = metrics.map(function(runs) {
+    var metricsKeys = Object.keys(runs[0]);
+
+    return metricsKeys.map(function(key) {
+      var resultsForKey = _.pluck(runs, key);
+
+      var sum = resultsForKey.reduce(function(a, b) {
+        return a + parseInt(b, 10);
+      }, 0);
+
+      var result = {};
+
+      result[key] = {
+        average: sum / runs.length,
+        min: Math.min.apply(null, resultsForKey),
+        max: Math.max.apply(null, resultsForKey)
+      };
+
+      return result;
+    });
+  });
+
+  // since the code above is synchronous when the function is
+  // written in asynchronous style, it is a good practise to execute
+  // the callback in nextTick:
+  process.nextTick(function() {
+    cb(null, analyzed);
   });
 }
