@@ -95,8 +95,13 @@ function analyzeMetrics(results, cb) {
     metricsKeys.forEach(function(key) {
       var resultsForKey = _.pluck(runs, key);
 
+      if (typeof resultsForKey[0] !== 'number') {
+        // skip strings
+        return;
+      }
+
       var sum = resultsForKey.reduce(function(a, b) {
-        return a + parseInt(b, 10);
+        return a + b;
       }, 0);
 
       result[key] = {
