@@ -6,6 +6,7 @@
     <title>Simple performance dashboard</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
 
   </head>
   <body>
@@ -13,19 +14,21 @@
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <table id="metrics-table">
-      <thead>
-        <tr>
-          <th>Variable</th>
-          <th id="value-col" style="cursor: pointer;">Value</th>
-          <th>Average</th>
-          <th>Website</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td colspan="4">Loading...</td></tr>
-      </tbody>
-    </table>
+    <div class="container">
+      <table id="metrics-table" class="table">
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th id="value-col" style="cursor: pointer;">Value</th>
+            <th>Average</th>
+            <th>Website</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="4">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
 
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/lodash/lodash.min.js"></script>
@@ -37,7 +40,7 @@
         <tr>
           <td><%- row.key %></td>
           <td><%- row.value %></td>
-          <td><%- row.avg || '---' %></td>
+          <td><%- row.avg ? row.avg.toFixed(2) : '---' %></td>
           <td>
             <%= row.siteIndex === 0 ?
               '<a href="http://www.mycs.com">www.mycs.com</a>' :
