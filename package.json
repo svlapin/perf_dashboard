@@ -1,0 +1,19 @@
+{
+  "name": "perf_dashboard",
+  "version": "1.0.0",
+  "description": "Simple performance dashboard",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/svlapin/perf_dashboard.git"
+  },
+  "author": "Sergey Lapin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/svlapin/perf_dashboard/issues"
+  },
+  "homepage": "https://github.com/svlapin/perf_dashboard"
+}
