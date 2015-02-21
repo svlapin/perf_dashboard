@@ -1,0 +1,23 @@
+{
+  "name": "perf_dashboard",
+  "main": "index.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/svlapin/perf_dashboard",
+  "authors": [
+    "Sergey <sv0lapin@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "lodash": "~3.3.0",
+    "jquery": "~2.1.3"
+  }
+}
