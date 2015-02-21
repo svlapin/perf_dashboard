@@ -13,11 +13,11 @@
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <table>
+    <table id="metrics-table">
       <thead>
         <tr>
           <th>Variable</th>
-          <th>Value</th>
+          <th id="value-col">Value</th>
           <th>Average</th>
           <th>Website</th>
         </tr>
@@ -30,8 +30,14 @@
 
     <script async src="/js/main.js"></script>
 
-    <script type="text/template" id="__tpl_table_row">
-      <tr></tr>
+    <script type="text/template" id="__tpl_table">
+      <% _.each(rows, function(row) { %>
+        <tr>
+          <td><%- row.key %></td>
+          <td><%- row.value || 'both' %></td>
+          <td><%- row.avg || '---' %></td>
+        </tr>
+      <% }); %>
     </script>
   </body>
 </html>

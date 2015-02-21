@@ -101,8 +101,8 @@ function analyzeMetrics(results, cb) {
 
       result[key] = {
         average: sum / runs.length,
-        min: Math.min.apply(null, resultsForKey),
-        max: Math.max.apply(null, resultsForKey)
+        min: Math.min.apply(Math, resultsForKey),
+        max: Math.max.apply(Math, resultsForKey)
       };
     });
 
