@@ -90,23 +90,23 @@ function analyzeMetrics(results, cb) {
   var analyzed = metrics.map(function(runs) {
     var metricsKeys = Object.keys(runs[0]);
 
-    return metricsKeys.map(function(key) {
+    var result = {};
+
+    metricsKeys.forEach(function(key) {
       var resultsForKey = _.pluck(runs, key);
 
       var sum = resultsForKey.reduce(function(a, b) {
         return a + parseInt(b, 10);
       }, 0);
 
-      var result = {};
-
       result[key] = {
         average: sum / runs.length,
         min: Math.min.apply(null, resultsForKey),
         max: Math.max.apply(null, resultsForKey)
       };
-
-      return result;
     });
+
+    return result;
   });
 
   // since the code above is synchronous when the function is
