@@ -12,3 +12,8 @@ Then clone the distro and run the following:
 npm install
 npm start
 ```
+
+## To run tests
+```sh
+npm test
+```
